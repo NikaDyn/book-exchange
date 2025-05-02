@@ -35,5 +35,8 @@ class ExchangeRequest(models.Model):
     status = models.CharField(max_length=10, choices=[('pending', 'Очікує'), ('accepted', 'Прийнято'), ('rejected', 'Відхилено')], default='pending')
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        db_table = 'exchange_exchangerequest'
+
     def __str__(self):
         return f"{self.from_user.username} → {self.to_user.username}"

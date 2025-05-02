@@ -3,21 +3,35 @@
 {% block content %}
   <h1>Мої обміни</h1>
 
-  <h2>Відправлені запити</h2>
+  <h2>Відправлені офери</h2>
   <ul>
-    {% for request in sent_requests %}
-      <li>{{ request.offered_book.title }} → {{ request.requested_book.title }} (Статус: {{ request.status }})</li>
+    {% for offer in offers_sent %}
+      <li>
+        {{ offer.offered_book.title }} → {{ offer.requested_book.title }} (Статус: {{ offer.status }})
+
+        {% if offer.status == 'pending' %}
+          <a href="{% url 'accept_offer' offer.id %}">Прийняти</a> |
+          <a href="{% url 'reject_offer' offer.id %}">Відхилити</a>
+        {% endif %}
+      </li>
     {% empty %}
-      <li>У вас немає відправлених запитів.</li>
+      <li>У вас немає відправлених оферів.</li>
     {% endfor %}
   </ul>
 
-  <h2>Отримані запити</h2>
+  <h2>Отримані офери</h2>
   <ul>
-    {% for request in received_requests %}
-      <li>{{ request.offered_book.title }} → {{ request.requested_book.title }} (Статус: {{ request.status }})</li>
+    {% for offer in offers_received %}
+      <li>
+        {{ offer.offered_book.title }} → {{ offer.requested_book.title }} (Статус: {{ offer.status }})
+
+        {% if offer.status == 'pending' %}
+          <a href="{% url 'accept_offer' offer.id %}">Прийняти</a> |
+          <a href="{% url 'reject_offer' offer.id %}">Відхилити</a>
+        {% endif %}
+      </li>
     {% empty %}
-      <li>У вас немає отриманих запитів.</li>
+      <li>У вас немає отриманих оферів.</li>
     {% endfor %}
   </ul>
 {% endblock %}

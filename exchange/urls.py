@@ -12,4 +12,6 @@ urlpatterns = [
     path('add/', views.add_book, name='add_book'),
     path('exchange/<int:offered_book_id>/', views.create_exchange_request, name='create_exchange'),
     path('my-exchanges/', views.my_exchanges, name='my_exchanges'),
+    path('offer/<int:offer_id>/accept/', views.update_offer_status, {'status': 'accepted'}, name='accept_offer'),
+    path('offer/<int:offer_id>/reject/', views.update_offer_status, {'status': 'rejected'}, name='reject_offer'),
 ]

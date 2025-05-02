@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Book, ExchangeOffer, ExchangeRequest
+from .models import Book, ExchangeOffer
 from .forms import BookForm, ExchangeOfferForm, UserRegistrationForm, ExchangeRequestForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
@@ -85,7 +85,6 @@ def register(request):
 @login_required
 def create_exchange_request(request, offered_book_id):
     offered_book = get_object_or_404(Book, id=offered_book_id, owner=request.user)
-
     if request.method == 'POST':
         form = ExchangeRequestForm(request.POST)
         if form.is_valid():
@@ -103,9 +102,23 @@ def create_exchange_request(request, offered_book_id):
 
 @login_required
 def my_exchanges(request):
-    sent_requests = ExchangeRequest.objects.filter(from_user=request.user)
-    received_requests = ExchangeRequest.objects.filter(to_user=request.user)
+    offers_sent = ExchangeOffer.objects.filter(from_user=request.user)
+    offers_received = ExchangeOffer.objects.filter(to_user=request.user)
+
     return render(request, 'exchange/my_exchanges.html', {
-        'sent_requests': sent_requests,
-        'received_requests': received_requests
+        'offers_sent': offers_sent,
+        'offers_received': offers_received,
     })
+
+
+@login_required
+def update_offer_status(request, offer_id, status):
+    offer = get_object_or_404(ExchangeOffer, id=offer_id, to_user=request.user)
+
+    if status not in ['accepted', 'rejected']:
+        return redirect('my_exchanges')
+
+    offer.status = status
+    offer.save()
+
+    return redirect('my_exchanges')
