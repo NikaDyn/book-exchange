@@ -1,0 +1,11 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+  <h2>Вхід</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Увійти</button>
+  </form>
+  <p>Ще не зареєстровані? <a href="{% url 'register' %}">Зареєструватися</a></p>
+{% endblock %}

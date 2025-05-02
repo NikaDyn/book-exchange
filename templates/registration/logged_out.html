@@ -1,0 +1,6 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h2>Ви вийшли з облікового запису</h2>
+  <p><a href="{% url 'login' %}">Увійти знову</a> або <a href="{% url 'book_list' %}">перейти на головну</a>.</p>
+{% endblock %}

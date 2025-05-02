@@ -1,0 +1,23 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+  <h1>Мої обміни</h1>
+
+  <h2>Відправлені запити</h2>
+  <ul>
+    {% for request in sent_requests %}
+      <li>{{ request.offered_book.title }} → {{ request.requested_book.title }} (Статус: {{ request.status }})</li>
+    {% empty %}
+      <li>У вас немає відправлених запитів.</li>
+    {% endfor %}
+  </ul>
+
+  <h2>Отримані запити</h2>
+  <ul>
+    {% for request in received_requests %}
+      <li>{{ request.offered_book.title }} → {{ request.requested_book.title }} (Статус: {{ request.status }})</li>
+    {% empty %}
+      <li>У вас немає отриманих запитів.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

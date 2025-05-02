@@ -1,0 +1,14 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+  <h1>Список книг для обміну</h1>
+  <ul>
+    {% for book in books %}
+      <li>
+        <strong>{{ book.title }}</strong> - {{ book.category }}
+        <a href="{% url 'offer_create' book.id %}">Пропонувати обмін</a>
+      </li>
+    {% endfor %}
+  </ul>
+  <a href="{% url 'book_create' %}">Додати нову книгу</a>
+{% endblock %}
