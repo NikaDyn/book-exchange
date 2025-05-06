@@ -2,13 +2,33 @@
 
 {% block content %}
   <h1>Список книг для обміну</h1>
+
+  <h2>Книги інших користувачів</h2>
   <ul>
-    {% for book in books %}
+    {% for book in other_books %}
       <li>
-        <strong>{{ book.title }}</strong> - {{ book.category }}
+        <strong>{{ book.title }}</strong> — {{ book.category }}<br>
+        Власник: {{ book.owner.username }}<br>
         <a href="{% url 'offer_create' book.id %}">Пропонувати обмін</a>
       </li>
+    {% empty %}
+      <li>Немає доступних книг інших користувачів.</li>
     {% endfor %}
   </ul>
+
+  <h2>Мої книги</h2>
+  <ul>
+    {% for book in own_books %}
+      <li>
+        <strong>{{ book.title }}</strong> — {{ book.category }}<br>
+        Власник: {{ book.owner.username }}<br>
+        <a href="{% url 'edit_book' book.id %}">Редагувати</a>
+        <a href="{% url 'delete_book' book.id %}">Видалити</a>
+      </li>
+    {% empty %}
+      <li>У вас ще немає доданих книг.</li>
+    {% endfor %}
+  </ul>
+
   <a href="{% url 'book_create' %}">Додати нову книгу</a>
 {% endblock %}

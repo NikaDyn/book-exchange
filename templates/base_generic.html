@@ -1,26 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Exchange</title>
+    <title>Обмін книгами</title>
 </head>
 <body>
     <header>
-        <h1>Book Exchange Platform</h1>
+        <h1>Платформа обміну книгами</h1>
         <nav>
-            <a href="{% url 'book_list' %}">Home</a>
-            <a href="{% url 'book_create' %}">Add Book</a>
+            <a href="{% url 'book_list' %}">Головна</a>
+            <a href="{% url 'book_create' %}">Додати книгу</a>
 
             {% if user.is_authenticated %}
-                <a href="{% url 'my_exchanges' %}">Переглянути пропозиції</a>
+                <a href="{% url 'my_exchanges' %}">Мої обміни</a>
                 <form action="{% url 'logout' %}" method="post" style="display: inline;">
                     {% csrf_token %}
-                    <button type="submit">Logout</button>
+                    <button type="submit">Вийти</button>
                 </form>
             {% else %}
-                <a href="{% url 'login' %}">Login</a>
-                <a href="{% url 'register' %}">Register</a>
+                <a href="{% url 'login' %}">Увійти</a>
+                <a href="{% url 'register' %}">Зареєструватися</a>
             {% endif %}
         </nav>
     </header>
@@ -31,7 +31,7 @@
     </main>
 
     <footer>
-        <p>Book Exchange Platform &copy; 2025</p>
+        <p>Платформа обміну книгами &copy; 2025</p>
     </footer>
 </body>
 </html>

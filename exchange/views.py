@@ -7,8 +7,17 @@ from django.contrib.auth import login, authenticate
 
 
 def book_list(request):
-    books = Book.objects.all()
-    return render(request, 'exchange/book_list.html', {'books': books})
+    if request.user.is_authenticated:
+        other_books = Book.objects.exclude(owner=request.user)
+        own_books = Book.objects.filter(owner=request.user)
+    else:
+        other_books = Book.objects.all()
+        own_books = Book.objects.none()
+
+    return render(request, 'exchange/book_list.html', {
+        'other_books': other_books,
+        'own_books': own_books,
+    })
 
 
 @login_required
@@ -122,3 +131,29 @@ def update_offer_status(request, offer_id, status):
     offer.save()
 
     return redirect('my_exchanges')
+
+
+@login_required
+def edit_book(request, book_id):
+    book = get_object_or_404(Book, id=book_id, owner=request.user)
+
+    if request.method == 'POST':
+        form = BookForm(request.POST, request.FILES, instance=book)
+        if form.is_valid():
+            form.save()
+            return redirect('book_list')
+    else:
+        form = BookForm(instance=book)
+
+    return render(request, 'exchange/edit_book.html', {'form': form, 'book': book})
+
+
+@login_required
+def delete_book(request, book_id):
+    book = get_object_or_404(Book, id=book_id, owner=request.user)
+
+    if request.method == 'POST':
+        book.delete()
+        return redirect('book_list')
+
+    return render(request, 'exchange/delete_book.html', {'book': book})

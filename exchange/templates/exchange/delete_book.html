@@ -1,0 +1,11 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+  <h2>Видалити книгу: {{ book.title }}</h2>
+  <p>Ви впевнені, що хочете видалити цю книгу?</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">Так, видалити</button>
+    <a href="{% url 'book_list' %}">Скасувати</a>
+  </form>
+{% endblock %}

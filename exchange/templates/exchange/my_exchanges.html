@@ -8,11 +8,6 @@
     {% for offer in offers_sent %}
       <li>
         {{ offer.offered_book.title }} → {{ offer.requested_book.title }} (Статус: {{ offer.status }})
-
-        {% if offer.status == 'pending' %}
-          <a href="{% url 'accept_offer' offer.id %}">Прийняти</a> |
-          <a href="{% url 'reject_offer' offer.id %}">Відхилити</a>
-        {% endif %}
       </li>
     {% empty %}
       <li>У вас немає відправлених оферів.</li>
